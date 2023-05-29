@@ -1,0 +1,39 @@
+*{
+    box-sizing: border-box;
+}
+.all{
+    margin: 0 auto;
+    justify-content: center;
+    display: flex;
+    flex-direction: row;
+}
+p{
+    justify-content: center;
+    display: flex;
+}
+.banro{
+    justify-content:center;
+    display: flex;
+    flex-direction: row;
+}
+ul{
+    display: flex;
+    flex-direction: column;
+
+}
+
+button{
+    background-color: aqua;
+    height: 60px;
+    width: 150px;
+}
+.banma{
+    justify-content:center;
+    display: flex;
+    flex-direction: row;
+}
+.heads{
+    justify-content:center;
+    display: flex;
+    flex-direction: row;
+}

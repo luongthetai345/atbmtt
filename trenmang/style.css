@@ -1,0 +1,8 @@
+*{
+    box-sizing: border-box;
+}
+.head{
+    justify-content: center;
+    display: flex;
+    flex-direction: row;
+}

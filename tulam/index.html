@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>An toàn bảo mật thông tin</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <div class="all">
+        <div>
+            <p>Mã hóa</p>
+            <br>
+            <div class="banro">
+                <p>Bản rõ</p>
+                <ul>
+                    <textarea name="indata" id="en" cols="30" rows="10"></textarea>
+                    <br>
+                    <button onclick="encrypt()"> Mã hóa </button>
+                </ul>
+                <ul><button>File</button></ul>
+                
+            </div>
+            <div class="banma">
+                <p>Bản mã</p>
+                <ul><textarea name="" id="de" cols="30" rows="10"></textarea></ul>
+                <ul>
+                    <button>Lưu</button>
+                    <br>
+                    <button onclick="move()">Chuyển</button>
+                </ul>
+            </div>
+        </div>
+        <hr>
+        <div>
+            <p>Giải mã</p>
+            <div class="banma">
+                <p>Bản mã</p>
+                <ul>
+                    <textarea name="outdata" id="de1" cols="30" rows="10"></textarea>
+                    <br>
+                    <button value="DES Decrypt" onclick="decrypt()"> Giải mã </button>
+                </ul>
+                <ul><button>File</button></ul>
+            </div>
+            <div class="banro">
+                <p>Bản rõ</p>
+                <ul><textarea name="" id="en1" cols="30" rows="10"></textarea></ul>
+                <ul>
+                    <button>Lưu</button>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="heads">
+        <td><p>Key</p></td> 
+        <ul><input type="text" name="key" value="" size="20"></ul>
+    </div>
+    <div>
+
+    </div>
+    <script src="./main.js"></script>
+</body>
+</html>
