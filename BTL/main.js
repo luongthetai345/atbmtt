@@ -470,6 +470,8 @@ function des_encrypt( inData, Key, do_encrypt )
    permute( result, tempData, FP_perm );
    return result;
 }
+
+
 // do encrytion/decryption
 // do_encrypt is TRUE for encrypt, FALSE for decrypt
 function do_des( do_encrypt )
@@ -510,4 +512,165 @@ function do_des( do_encrypt )
    // process output
    format_DES_output( );
    document.stuff.details.value = accumulated_output_info;
+}
+function format_DES_output1( )
+{
+   var i;
+   var bits;
+   var str="";
+
+   // what type of data do we have to work with?
+   if ( document.stuff.outtype1[0].checked )
+   {
+      // convert each set of bits back to ASCII
+      for( i=1; i<=64; i+= 8 )
+      {
+            str += String.fromCharCode(
+                        DES_output[i  ]*128 + DES_output[i+1]*64  +
+                        DES_output[i+2]*32  + DES_output[i+3]*16  +
+                        DES_output[i+4]*8   + DES_output[i+5]*4   +
+                        DES_output[i+6]*2   + DES_output[i+7] );
+      }
+   }
+   else 
+   {
+      // output hexdecimal data
+      for( i=1; i<=64; i+= 4 )
+      {
+            bits = DES_output[i  ]*8   + DES_output[i+1]*4   +
+                   DES_output[i+2]*2   + DES_output[i+3];
+
+            // 0-9 or A-F?
+            if ( bits <= 9 )
+               str += String.fromCharCode( bits+48 );
+            else
+               str += String.fromCharCode( bits+87 );
+      }
+   }
+
+   // copy to textbox
+   document.stuff.outdata1.value = str;
+}
+function des_encrypt1( inData1, Key, do_encrypt )
+{
+   var tempData = new Array( 65 );	// output bits
+   var CD = new Array( 57 );		// halves of current key
+   var KS = new Array( 16 );		// per-round key schedules
+   var L = new Array( 33 );		// left half of current data
+   var R = new Array( 33 );		// right half of current data
+   var result = new Array( 65 );	// DES output
+   var i;
+
+   // do the initial key permutation
+   permute( CD, Key, PC_1_perm );
+   accumulate_bitstring( "CD[0]: ", CD, 7 );
+
+   // create the subkeys
+   for( i=1; i<=16; i++ )
+   {
+      // create a new array for each round
+      KS[i] = new Array( 49 );
+
+      // how much should we shift C and D?
+      if ( i==1 || i==2 || i==9 || i == 16 )
+         shift_CD_1( CD );
+      else
+         shift_CD_2( CD );
+      accumulate_bitstring( "CD["+i+"]: ", CD, 7 );
+
+      // create the actual subkey
+      permute( KS[i], CD, PC_2_perm );
+      accumulate_bitstring( "KS["+i+"]: ", KS[i], 6 );
+   }
+
+   // handle the initial permutation
+   permute( tempData, inData1, IP_perm );
+
+   // split data into L/R parts
+   for( i=1; i<=32; i++ )
+   {
+      L[i] = tempData[i];
+      R[i] = tempData[i+32];
+   }
+   accumulate_bitstring( "L[0]: ", L, 8 );
+   accumulate_bitstring( "R[0]: ", R, 8 );
+
+   // encrypting or decrypting?
+   if ( do_encrypt )
+   {
+      // encrypting
+      for( i=1; i<=16; i++ )
+      {
+         accumulate_output( "Round " + i );
+         des_round( L, R, KS[i] );
+      }
+   }
+   else
+   {
+      // decrypting
+      for( i=16; i>=1; i-- )
+      {
+         accumulate_output( "Round " + (17-i) );
+         des_round( L, R, KS[i] );
+      }
+   }
+
+   // create the 64-bit preoutput block = R16/L16
+   for( i=1; i<=32; i++ )
+   {
+      // copy R bits into left half of block, L bits into right half
+      tempData[i] = R[i];
+      tempData[i+32] = L[i];
+   }
+   accumulate_bitstring ("LR[16] ", tempData, 8 );
+
+   // do final permutation and return result
+   permute( result, tempData, FP_perm );
+   return result;
+}
+// do encrytion/decryption
+// do_encrypt is TRUE for encrypt, FALSE for decrypt
+function do_des1( do_encrypt )
+{
+   var inData1 = new Array( 65 );	// input message bits
+   var Key = new Array( 65 );
+
+   accumulated_output_info = "";
+
+   // get the message from the user
+   // also check if it is ASCII or hex
+   get_value( inData1, document.stuff.indata1.value,
+		document.stuff.intype[0].checked );
+
+   // problems??
+   if ( inData1[0] == ERROR_VAL )
+   {
+      document.stuff.details1.value = accumulated_output_info;
+      return;
+   }
+   accumulate_bitstring( "Input bits:", inData1, 8 );
+
+   // get the key from the user
+   get_value( Key, document.stuff.key.value, false );
+   // problems??
+   if ( Key[0] == ERROR_VAL )
+   {
+      document.stuff.details1.value = accumulated_output_info;
+      return;
+   }
+   accumulate_bitstring( "Key bits:", Key, 8 );
+
+   // do the encryption/decryption, put output in DES_output for display
+   DES_output = des_encrypt1( inData1, Key, do_encrypt )
+
+   accumulate_bitstring ("Output ", DES_output, 8 );
+
+   // process output
+   format_DES_output1( );
+   document.stuff.details1.value = accumulated_output_info;
+}
+function move(){
+   var code = document.stuff.outdata.value;
+   document.stuff.outdata.value = document.stuff.indata1.value;
+   document.stuff.indata1.value = code;
 }

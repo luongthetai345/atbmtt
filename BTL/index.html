@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <form name="stuff">
+    <div class="key">
+      <p>KEY:</p>
+      <ul><input type="text" name="key" value="133457799bbcdff1" size="25"></ul>
+    </div>
+    <div class="head">
+      <div class="mahoa">
+          <div class="p">
+            <p>Bản rõ</p> 
+            <ul>
+              <textarea type="text" name="indata" cols="30" rows="10"></textarea>
+              <div class="input">
+                <ul><input type="radio" name="intype">ASCII</input>
+                <input type="radio" name="intype" checked="checked">Hex</input></ul>
+              </div>
+              <ul><input type="button" value="Mã hóa" onclick="do_des(true);" class="button"></ul>
+            </ul>
+            <ul><input type="button" value="File" class="button"></ul>
+          </div>
+        <div class="banma">
+          <p>Bản mã</p>
+          <div class="banma1">
+            <ul><textarea type="text" name="outdata" cols="30" rows="10"></textarea>
+            <div class="input"> 
+              <ul><input type="radio" name="outtype" onclick="format_DES_output();">ASCII</input>
+              <input type="radio" name="outtype" checked="checked" onclick="format_DES_output();">Hex</input></ul>
+            </div></ul>
+          </div>
+          <div class="luuchuyen">
+            <ul><input type="button" value="Lưu" class="button"><br><br>
+            <input type="button" value="Chuyển" class="button" onclick="move()"></ul>
+          </div>
+        </div>
+          Chi tiết:<br>
+            <textarea name="details" id="details" rows="20" cols="90"></textarea>
+        </div>
+        <hr>
+        <div class="giaima">
+          <div class="p">
+            <p>Bản mã</p> 
+              <ul><textarea type="text" name="indata1" cols="30" rows="10"></textarea>
+              <div class="input">
+                <ul><input type="radio" name="intype1">ASCII</input>
+                <input type="radio" name="intype1" checked="checked">Hex</input></ul>
+              </div>
+              <ul><input type="button" value="Giải mã" onclick="do_des1(false);" class="button"></ul></ul>
+            <ul><input type="button" value="File" class="button"></ul>
+          </div>
+          <div class="banma">
+            <p>Bản rõ</p>
+            <div class="banma1">
+              <ul><textarea type="text" name="outdata1" cols="30" rows="10"></textarea>
+              <div class="input"> 
+                <ul><input type="radio" name="outtype1" onclick="format_DES_output1();">ASCII</input>
+                <input type="radio" name="outtype1" checked="checked" onclick="format_DES_output1();">Hex</input></ul>
+              </div></ul>
+            </div>
+            <div class="luuchuyen">
+              <ul><input type="button" value="Lưu" class="button"></ul>
+            </div>
+            
+      </div>
+      Chi tiết:<br>
+      <textarea name="details1" id="details1" rows="20" cols="90"></textarea>
+    </div>
+   
+    
+    </form>
+    <script src="./main.js"></script>
+</body>
+</html>
